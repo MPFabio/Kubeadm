@@ -23,6 +23,6 @@ output "The_kubeadm_Public_ip" {
 }
 
 output "tls_private_key" {
-  value     = tls_private_key.kubeadm.private_key_pem
-  sensitive = true
+  value = nonsensitive(tls_private_key.kubeadm.private_key_pem)
+  
 }
