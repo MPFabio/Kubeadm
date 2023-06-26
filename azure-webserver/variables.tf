@@ -21,7 +21,7 @@ variable "tenant_id" {
 variable "instance_size" {
    type = string
    description = "Azure instance size"
-   default = "Standard_F2"
+   default = "Standard_D2ds_v4"
 }
 
 variable "location" {
