@@ -93,7 +93,7 @@ resource "azurerm_network_interface" "kubeadm" {
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
-resource "tls_private_key" "example_ssh" {
+resource "tls_private_key" "kubeadm" {
     algorithm = "RSA"
     rsa_bits = 4096
 }
@@ -122,7 +122,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
 
    admin_ssh_key {
         username = "fabio"
-        public_key = tls_private_key.example_ssh.public_key_openssh 
+        public_key = tls_private_key.kubeadm.public_key_openssh 
     }
 
    os_disk {
