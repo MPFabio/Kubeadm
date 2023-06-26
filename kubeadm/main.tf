@@ -141,7 +141,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
 }
 
 
-resource "tls_private_key" "example_ssh" {
+resource "tls_private_key" "kubeadm" {
     algorithm = "RSA"
     rsa_bits = 4096
 }
