@@ -1,7 +1,3 @@
-output "Ressource_group_name" {
-  value = data.module.ModuleP.Ressource_group_name
-}
-
 output "Environment" {
   value = module.ModuleP.Environment
 }
