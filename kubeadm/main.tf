@@ -31,7 +31,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
    name = "kubeadm${var.environment}"
    resource_group_name = data.azurerm_resource_group.kubeadm
-   location = azurerm_resource_group.kubeadm.location
+   location = data.azurerm_resource_group.kubeadm
    custom_data = base64encode(file("../kubeadm/init-script.sh"))
    network_interface_ids = [
        azurerm_network_interface.kubeadm.id,
