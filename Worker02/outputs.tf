@@ -1,5 +1,5 @@
 output "Ressource_group_name" {
-  value = module.ModuleP.Ressource_group_name
+  value = data.module.ModuleP.Ressource_group_name
 }
 
 output "Environment" {
