@@ -5,14 +5,14 @@ resource "azurerm_resource_group" "kubeadm" {
 
 
 resource "azurerm_network_interface_security_group_association" "nsgnic" {
-  network_interface_id      = azurerm_network_interface.webserver.id
+  network_interface_id      = azurerm_network_interface.kubeadm.id
   network_security_group_id = azurerm_network_security_group.allowedports.id
 }
 
 resource "azurerm_network_security_group" "allowedports" {
    name = "allowedports"
    resource_group_name = azurerm_resource_group.kubeadm.name
-   location = azurerm_resource_group.webserver.location
+   location = azurerm_resource_group.kubeadm.location
   
    security_rule {
        name = "http"
@@ -63,7 +63,7 @@ resource "azurerm_network_security_group" "allowedports" {
    }
 }
 
-resource "azurerm_public_ip" "webserver_public_ip" {
+resource "azurerm_public_ip" "kubeadm_public_ip" {
    name = "kubeadm_public_ip"
    location = var.location
    resource_group_name = azurerm_resource_group.kubeadm.name
@@ -77,7 +77,7 @@ resource "azurerm_public_ip" "webserver_public_ip" {
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
-resource "azurerm_network_interface" "webserver" {
+resource "azurerm_network_interface" "kubeadm" {
    name = "kubeadm-interface"
    location = azurerm_resource_group.kubeadm.location
    resource_group_name = azurerm_resource_group.kubeadm.name
@@ -85,7 +85,7 @@ resource "azurerm_network_interface" "webserver" {
    ip_configuration {
        name = "internal"
        private_ip_address_allocation = "Dynamic"
-       subnet_id = azurerm_subnet.webserver-subnet.id
+       subnet_id = azurerm_subnet.kubeadm-subnet.id
        public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
    }
 
