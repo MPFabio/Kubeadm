@@ -140,9 +140,3 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
-
-resource "tls_private_key" "kubeadm" {
-    algorithm = "RSA"
-    rsa_bits = 4096
-}
-
