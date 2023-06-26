@@ -26,3 +26,8 @@ output "tls_private_key" {
   value     = tls_private_key.kubeadm.private_key_pem
   sensitive = true
 }
+
+output "my_env_rg" {
+  value       = azurerm_resource_group.kubeadm
+  description = "The my-env-rg Azure resource group."
+}
