@@ -1,10 +1,10 @@
 module "azure_resource_group" {
-  source = "module.azure_resource_group.kubeadm-fabio-${var.environment}"
+  source = "resource-group"
 }
 
 
 resource "azurerm_resource_group" "kubeadm" {
-   name = "kubeadm-fabio-${var.environment}"
+   name = "kubeadm-fabio"
    location = var.location
 }
 
