@@ -1,5 +1,5 @@
-resource "azurerm_resource_group" "webserver" {
-   name = "nginx-server-fabio-${var.environment}"
+resource "azurerm_resource_group" "kubeadm" {
+   name = "kubeadm-fabio-${var.environment}"
    location = var.location
 }
 
@@ -11,7 +11,7 @@ resource "azurerm_network_interface_security_group_association" "nsgnic" {
 
 resource "azurerm_network_security_group" "allowedports" {
    name = "allowedports"
-   resource_group_name = azurerm_resource_group.webserver.name
+   resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.webserver.location
   
    security_rule {
@@ -64,9 +64,9 @@ resource "azurerm_network_security_group" "allowedports" {
 }
 
 resource "azurerm_public_ip" "webserver_public_ip" {
-   name = "webserver_public_ip"
+   name = "kubeadm_public_ip"
    location = var.location
-   resource_group_name = azurerm_resource_group.webserver.name
+   resource_group_name = azurerm_resource_group.kubeadm.name
    allocation_method = "Dynamic"
 
    tags = {
@@ -74,48 +74,48 @@ resource "azurerm_public_ip" "webserver_public_ip" {
        costcenter = "it"
    }
 
-   depends_on = [azurerm_resource_group.webserver]
+   depends_on = [azurerm_resource_group.kubeadm]
 }
 
 resource "azurerm_network_interface" "webserver" {
-   name = "nginx-interface"
-   location = azurerm_resource_group.webserver.location
-   resource_group_name = azurerm_resource_group.webserver.name
+   name = "kubeadm-interface"
+   location = azurerm_resource_group.kubeadm.location
+   resource_group_name = azurerm_resource_group.kubeadm.name
 
    ip_configuration {
        name = "internal"
        private_ip_address_allocation = "Dynamic"
        subnet_id = azurerm_subnet.webserver-subnet.id
-       public_ip_address_id = azurerm_public_ip.webserver_public_ip.id
+       public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
    }
 
-   depends_on = [azurerm_resource_group.webserver]
+   depends_on = [azurerm_resource_group.kubeadm]
 }
 
-resource "azurerm_linux_virtual_machine" "nginx" {
+resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
-   name = "nginx-webserver"
-   resource_group_name = azurerm_resource_group.webserver.name
-   location = azurerm_resource_group.webserver.location
-   custom_data = base64encode(file("../azure-webserver/init-script.sh"))
+   name = "kubeadm"
+   resource_group_name = azurerm_resource_group.kubeadm.name
+   location = azurerm_resource_group.kubeadm.location
+   custom_data = base64encode(file("../kubeadm/init-script.sh"))
    network_interface_ids = [
-       azurerm_network_interface.webserver.id,
+       azurerm_network_interface.kubeadm.id,
    ]
 
    source_image_reference {
        publisher = "Canonical"
        offer = "UbuntuServer"
-       sku = "18.04-LTS"
+       sku = "22.04-LTS"
        version = "latest"
    }
 
-   computer_name = "nginx"
+   computer_name = "kubeadm"
    admin_username = "fabio"
    admin_password = "Azerty-123"
    disable_password_authentication = false
 
    os_disk {
-       name = "nginxdisk01"
+       name = "kubeadmdisk01"
        caching = "ReadWrite"
        #create_option = "FromImage"
        storage_account_type = "Standard_LRS"
@@ -126,5 +126,5 @@ resource "azurerm_linux_virtual_machine" "nginx" {
        costcenter = "it"
    }
 
-   depends_on = [azurerm_resource_group.webserver]
+   depends_on = [azurerm_resource_group.kubeadm]
 }
