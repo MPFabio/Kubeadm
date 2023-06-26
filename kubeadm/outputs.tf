@@ -1,5 +1,5 @@
 output "Ressource_group_name" {
-  value = azurerm_resource_group.kubeadm.name
+  value = data.azurerm_resource_group.kubeadm.name
 }
 
 output "Environment" {
