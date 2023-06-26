@@ -94,7 +94,8 @@ resource "azurerm_network_interface" "kubeadm" {
 
 resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
-   name = "kubeadm"
+   name = "kubeadm${count.index}"
+   count = 3
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
    custom_data = base64encode(file("../kubeadm/init-script.sh"))
@@ -115,7 +116,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    disable_password_authentication = false
 
    os_disk {
-       name = "kubeadmdisk01"
+       name = "kubeadmdisk${count.index}"
        caching = "ReadWrite"
        #create_option = "FromImage"
        storage_account_type = "Standard_LRS"
