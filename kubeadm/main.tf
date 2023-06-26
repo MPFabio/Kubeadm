@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "kubeadm_public_ip" {
    name = "kubeadm_public_ip"
    location = var.location
-   resource_group_name = azurerm_resource_group.kubeadm.name
+   resource_group_name = data.azurerm_resource_group.kubeadm
    allocation_method = "Dynamic"
 
    tags = {
@@ -9,13 +9,13 @@ resource "azurerm_public_ip" "kubeadm_public_ip" {
        costcenter = "it"
    }
 
-   depends_on = [azurerm_resource_group.kubeadm]
+   depends_on = [data.azurerm_resource_group.kubeadm]
 }
 
 resource "azurerm_network_interface" "kubeadm" {
    name = "kubeadm-interface"
    location = azurerm_resource_group.kubeadm.location
-   resource_group_name = azurerm_resource_group.kubeadm.name
+   resource_group_name = data.azurerm_resource_group.kubeadm
 
    ip_configuration {
        name = "internal"
@@ -24,13 +24,13 @@ resource "azurerm_network_interface" "kubeadm" {
        public_ip_address_id = azurerm_public_ip.kubeadm_public_ip.id
    }
 
-   depends_on = [azurerm_resource_group.kubeadm]
+   depends_on = [data.azurerm_resource_group.kubeadm]
 }
 
 resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
    name = "kubeadm${var.environment}"
-   resource_group_name = azurerm_resource_group.kubeadm.name
+   resource_group_name = data.azurerm_resource_group.kubeadm
    location = azurerm_resource_group.kubeadm.location
    custom_data = base64encode(file("../kubeadm/init-script.sh"))
    network_interface_ids = [
@@ -61,5 +61,5 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
        costcenter = "it"
    }
 
-   depends_on = [azurerm_resource_group.kubeadm]
+   depends_on = [data.azurerm_resource_group.kubeadm]
 }
