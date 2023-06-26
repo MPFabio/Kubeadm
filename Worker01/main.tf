@@ -1,3 +1,3 @@
 module "ModuleP" {
-  source = "../azure-webserver"
+  source = "../kubeadm"
 }
