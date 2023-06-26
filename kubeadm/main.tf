@@ -115,7 +115,7 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
    disable_password_authentication = false
 
    os_disk {
-       name = "kubeadmdisk${var.environment}}"
+       name = "kubeadmdisk${var.environment}"
        caching = "ReadWrite"
        #create_option = "FromImage"
        storage_account_type = "Standard_LRS"
