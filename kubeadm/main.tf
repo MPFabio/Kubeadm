@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "kubeadm" {
-   name = "kubeadm-fabio-${var.environment}"
+   name = "kubeadm-fabio"
    location = var.location
 }
 
