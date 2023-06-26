@@ -1,8 +1,3 @@
-module "azure_resource_group" {
-  source = "kubeadm"
-}
-
-
 resource "azurerm_resource_group" "kubeadm" {
    name = "kubeadm-fabio"
    location = var.location
