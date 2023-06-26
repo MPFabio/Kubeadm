@@ -64,10 +64,6 @@ resource "azurerm_network_security_group" "allowedports" {
 }
 
 
-
-
-
-
 resource "azurerm_public_ip" "kubeadm_public_ip" {
    name = "kubeadm_public_ip"
    location = var.location
@@ -97,6 +93,11 @@ resource "azurerm_network_interface" "kubeadm" {
    depends_on = [azurerm_resource_group.kubeadm]
 }
 
+resource "tls_private_key" "example_ssh" {
+    algorithm = "RSA"
+    rsa_bits = 4096
+}
+
 resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
    name = "kubeadm${var.environment}"
@@ -117,8 +118,16 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
 
    computer_name = "kubeadm${var.environment}"
    admin_username = "fabio"
-   admin_password = "Azerty-123"
-   disable_password_authentication = false
+   disable_password_authentication = true
+
+   admin_ssh_key {
+        username = "fabio"
+        public_key = tls_private_key.example_ssh.public_key_openssh 
+    }
+
+    tags = {
+        environment = "Terraform"
+    }
 
    os_disk {
        name = "kubeadmdisk${var.environment}"
@@ -134,3 +143,10 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
 
    depends_on = [azurerm_resource_group.kubeadm]
 }
+
+
+resource "tls_private_key" "example_ssh" {
+    algorithm = "RSA"
+    rsa_bits = 4096
+}
+
