@@ -1,5 +1,5 @@
 module "azure_resource_group" {
-  source = "resource-group"
+  source = "kubeadm"
 }
 
 
