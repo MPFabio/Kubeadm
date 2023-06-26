@@ -14,10 +14,10 @@ output "The_vnet_ID" {
  value = module.ModuleP.The_vnet_ID
 }
 
-output "The_webserver_Public_ip" {
+output "The_kubeadm_Public_ip" {
    value = module.ModuleP.The_webserver_Public_ip
 }
 
-output "The_webserver_Private_ip" {
+output "The_kubeadm_Private_ip" {
    value = module.ModuleP.The_webserver_Private_ip
 }
