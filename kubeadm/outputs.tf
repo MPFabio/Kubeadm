@@ -27,7 +27,6 @@ output "tls_private_key" {
   sensitive = true
 }
 
-output "my_env_rg" {
+output "kubeadm-fabio" {
   value       = azurerm_resource_group.kubeadm
-  description = "The my-env-rg Azure resource group."
 }
