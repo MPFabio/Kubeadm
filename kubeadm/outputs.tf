@@ -1,5 +1,5 @@
 output "Ressource_group_name" {
-  value = azurerm_resource_group.webserver.name
+  value = azurerm_resource_group.kubeadm.name
 }
 
 output "Environment" {
