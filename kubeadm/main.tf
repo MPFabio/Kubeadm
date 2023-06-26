@@ -94,8 +94,7 @@ resource "azurerm_network_interface" "kubeadm" {
 
 resource "azurerm_linux_virtual_machine" "kubeadm" {
    size = var.instance_size
-   name = "kubeadm${count.index}"
-   count = 3
+   name = "kubeadm${var.environment}"
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
    custom_data = base64encode(file("../kubeadm/init-script.sh"))
@@ -110,13 +109,13 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
        version = "latest"
    }
 
-   computer_name = "kubeadm"
+   computer_name = "kubeadm${var.environment}"
    admin_username = "fabio"
    admin_password = "Azerty-123"
    disable_password_authentication = false
 
    os_disk {
-       name = "kubeadmdisk${count.index}"
+       name = "kubeadmdisk${var.environment}}"
        caching = "ReadWrite"
        #create_option = "FromImage"
        storage_account_type = "Standard_LRS"
