@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "kubeadm_public_ip" {
 
 resource "azurerm_network_interface" "kubeadm" {
    name = "kubeadm-interface"
-   location = azurerm_resource_group.kubeadm.location
+   location = data.azurerm_resource_group.kubeadm
    resource_group_name = data.azurerm_resource_group.kubeadm
 
    ip_configuration {
