@@ -125,10 +125,6 @@ resource "azurerm_linux_virtual_machine" "kubeadm" {
         public_key = tls_private_key.example_ssh.public_key_openssh 
     }
 
-    tags = {
-        environment = "Terraform"
-    }
-
    os_disk {
        name = "kubeadmdisk${var.environment}"
        caching = "ReadWrite"
