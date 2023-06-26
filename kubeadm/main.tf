@@ -1,3 +1,8 @@
+module "azure_resource_group" {
+  source = "resource-group"
+}
+
+
 resource "azurerm_resource_group" "kubeadm" {
    name = "kubeadm-fabio-${var.environment}"
    location = var.location
