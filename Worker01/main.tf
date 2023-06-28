@@ -4,8 +4,3 @@ module "ModuleP" {
   location = "francecentral"
   environment = "Worker01"
 }
-
-resource "azurerm_resource_group" "kubeadm" {
-   name = "kubeadm-fabio"
-   location = var.location
-}
