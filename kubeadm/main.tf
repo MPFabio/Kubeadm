@@ -9,7 +9,7 @@ resource "azurerm_network_interface_security_group_association" "nsgnic" {
 }
 
 resource "azurerm_network_security_group" "allowedports" {
-   name = "allowedports"
+   name = "allowedports${var.environment}"
    resource_group_name = azurerm_resource_group.kubeadm.name
    location = azurerm_resource_group.kubeadm.location
   
@@ -64,7 +64,7 @@ resource "azurerm_network_security_group" "allowedports" {
 
 
 resource "azurerm_public_ip" "kubeadm_public_ip" {
-   name = "kubeadm_public_ip"
+   name = "kubeadm_public_ip${var.environment}"
    location = var.location
    resource_group_name = azurerm_resource_group.kubeadm.name
    allocation_method = "Dynamic"
