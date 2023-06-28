@@ -23,5 +23,5 @@ output "The_kubeadm_Private_ip" {
 }
 
 output "tls_private_key" {
-  value     = nonsensitive(module.ModuleP.tls_private_key)
+  value     = module.ModuleP.tls_private_key
 }
