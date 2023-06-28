@@ -1,3 +1,8 @@
+resource "azurerm_resource_group" "kubeadm" {
+   name = "kubeadm-fabio"
+   location = var.location
+}
+
 resource "azurerm_network_interface_security_group_association" "nsgnic" {
   network_interface_id      = azurerm_network_interface.kubeadm.id
   network_security_group_id = azurerm_network_security_group.allowedports.id
